@@ -7,6 +7,7 @@
 \ProcessOptions
 \LoadClass[a4paper]{article} % default class
 \RequirePackage[utf8]{inputenc} % use UTF-8
+\RequirePackage{mmap}
 \RequirePackage[T2A,OT1]{fontenc} % rus fonts
 \RequirePackage[russian]{babel} % russian language
 \RequirePackage{indentfirst} % paragraph indent
@@ -25,18 +26,30 @@
 \RequirePackage{lipsum} % generate sample text
 \RequirePackage{array} % for new table columns and image inside tables
 \RequirePackage{pdfpages} % to insert pdf as titile page 
-\RequirePackage{subcaption} % to tune subcaptions
+%\RequirePackage{subcaption} % to tune subcaptions
+\RequirePackage{subfigure}
 \RequirePackage{caption} % to tune subcaptions
 \RequirePackage{fancyhdr} % fancy headers on every page
+\RequirePackage{xspace} % space after command
+\RequirePackage{enumitem} % italic descriptions
+\RequirePackage{hyperref} % for refs in descriptions
+\RequirePackage{nameref} % for refs in descriptions
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{standalone}
+\RequirePackage{tkz-euclide}
+\usetikzlibrary{shapes,backgrounds}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{snakes}
+\usetikzlibrary{shapes.geometric, arrows}
 %\RequirePackage[showframe]{geometry}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%   LAYOUT   %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\sloppy
 \setlength{\parindent}{1cm}  % set paragraph indent
 \setstretch{1.5} % line interval
-%\newcommand{\sectionbreak}{\clearpage} % set start each section on a new page
+\newcommand{\sectionbreak}{\clearpage} % set start each section on a new page
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%   LISTINGS   %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -125,6 +138,7 @@
 \captionsetup[table]{justification=raggedleft} 
 \captionsetup[figure]{justification=centering,labelsep=endash} 
 
+\renewcommand{\thesubfigure}{(\asbuk{subfigure})}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%   BIBLIOGRAPHY   %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -168,26 +182,112 @@
 %%%%%%%%%%%%%%%%%%%%%%   COLOR BOXES  %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% colorbox for menu
-\usepackage[most]{tcolorbox}
-\definecolor{myblue}{rgb}{0.000, 1.000, 1.000}
-\definecolor{dodgerblue}{rgb}{0.117,0.564,1.000}
+\makeatletter
 % colorbox for algorithm
-\newtcolorbox[auto counter]{guide}[1][]{enhanced jigsaw,inherit height,
-	colback=red!5,opacityback=0.9,colframe=red,title=Алгоритм \#\thetcbcounter,
-	grow to left by=4mm,grow to right by=4mm,
-	arc is angular,arc=0mm,
-	fonttitle=\bfseries\large,
-}
-% colorbox for algorithm
-\newtcbtheorem[auto counter]{algorithm}{Алгоритм}{
+\newcounter{algc} % Алгоритм А Л Г О Р И Т М
+\newtcbtheorem[use counter=algc]{algorithm}{А Л Г О Р И Т М \#}{
 	breakable,
 	lower separated=false,
-	colback=white!80!gray,
+	colback=white!100!gray,
 	colframe=white, fonttitle=\bfseries,
-	colbacktitle=white!50!gray,
+	colbacktitle=white!100!gray,
 	coltitle=black,
 	enhanced,
 	boxed title style={colframe=black},
-	after skip=20pt
+	after skip=-5pt,
+	before skip=20pt,
+	fonttitle = \normalfont \ttfamily,
+	code={\edef\@currentlabelname{{#2}}}
 }{alg}
+\makeatother
+
+
+% for description enviroment
+
+\newcounter{descriptcount}
+
+\makeatletter
+\let\orgdescriptionlabel\descriptionlabel
+\renewcommand*{\descriptionlabel}[1]{%
+	\setcounter{descriptcount}{1}
+	\let\orglabel\label
+	\let\label\@gobble
+	\phantomsection
+	\edef\@currentlabel{#1}%
+	\let\label\orglabel
+	\orgdescriptionlabel{\hspace\labelsep \upshape\bfseries \arabic{descriptcount}.~#1. \stepcounter{descriptcount}}%
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%   ENVIROMENTS  %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{astc}[algc]
+
+\newenvironment{astep}[1]{
+	\refstepcounter{astc}
+%	$ $\newline
+	\textbf{\theastc.~} \textit{#1.}
+	}{\\}
+
+\newenvironment{conditions}[1][где:]
+{#1 \begin{tabular}[t]{>{$}l<{$} @{${}-{}$} p{\linewidth}}}
+	{\end{tabular}\\}
+%	{\end{tabular}\\[\belowdisplayskip]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%   COMMANDS  %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newcommand{\kmeans}{\mbox{$ k $-means}\xspace}
+\newcommand{\Ward}{Ward\xspace}
+\newcommand{\AWard}{\mbox{A-Ward}\xspace}
+\newcommand{\Wardp}{\mbox{Ward$ _p $}\xspace}
+\newcommand{\AWardpb}{\mbox{A-Ward$ _{p\beta} $}\xspace}
+\newcommand{\BisectingKmeans}{Bisecting \mbox{k-means}\xspace}
+\newcommand{\BiKMR}{\mbox{BiKM-R}\xspace}
+\newcommand{\dePDDP}{dePDDP\xspace}
+\newcommand{\ikmeans}{\mbox{$ ik $-means}\xspace}
+\newcommand{\imwkmeanspb}{\mbox{$ imwk $-means$ _{p\beta} $}\xspace}
+\newcommand{\PDDP}{PDDP\xspace}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%     TIKZ    %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+
+\tikzstyle{menuitem} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=black!10]
+
+
+
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\newcommand\Star[3][]{%
+	\path[#1] (0  :#3) -- ( 36:#2) 
+	-- (72 :#3) -- (108:#2)
+	-- (144:#3) -- (180:#2)
+	-- (216:#3) -- (252:#2)
+	-- (288:#3) -- (324:#2)--cycle;
+}
+\newcommand\Center[3][]{
+	\begin{scope}[shift = {(#2,#3)}, scale=0.08]
+		\Star[#1]{2}{4}
+	\end{scope}
+}
+
+\newcommand\point[3][]{
+	\begin{scope}[shift = {(#2,#3)}, scale=0.08]
+		\draw[#1] (0,0) circle (1.5);
+	\end{scope}
+}

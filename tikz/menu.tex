@@ -1,0 +1,69 @@
+\documentclass[12pt,tikz]{standalone}
+
+\usepackage[utf8]{inputenc} % use UTF-8
+\usepackage{mmap}
+\usepackage[T2A,OT1]{fontenc} % rus fonts
+\usepackage[russian]{babel} % russian language
+
+\usetikzlibrary{positioning}
+
+\usepackage{tkz-euclide}
+\usetikzlibrary{shapes,backgrounds}
+
+\tikzstyle{menuitem} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=black!10]
+
+\tikzstyle{arrow} = [thick,->,>=stealth]
+ 
+\begin{document}
+		\begin{tikzpicture}[node distance=1.5cm]
+		    \node [draw,menuitem] (File) at (4,5) {File};
+		    \node [draw,menuitem,below=of File.west, right of=File, anchor=west] (LDF) {Load data file};
+		    \node [draw,menuitem,below=of LDF.west,  anchor=west] (DO) {Data operations};
+		    \node [draw,menuitem,below=of DO.west,  anchor=west] (SD) {Save data};
+		    \node [draw,menuitem,below=of SD.west,  anchor=west] (Exit) {Exit};		    		    
+			\node [draw,menuitem,right of=DO,  anchor=west, xshift=1cm] (NA) {Normalize All};		    		    		
+		    \node [draw, menuitem,below=of NA.west, anchor=west] (Clear) {Clear};		    		    		
+		    \node [draw, menuitem,below=of Clear.west, anchor=west] (Gen) {Generate};
+
+   	  		\draw [arrow] (File) |- (LDF);
+		    \draw [arrow] (File) |- (DO);
+		    \draw [arrow] (File) |- (SD);
+		    \draw [arrow,] (File) |- (Exit);	
+		    \draw [arrow] (DO) |- (NA);	
+   		    \draw [arrow,] (DO) - ++(2,0) -- ++(2,-.8) |- (Clear);	
+  		    \draw [arrow,] (DO) - ++(2,0) -- ++(2,-.8) |- (Gen);	
+		    
+		    \node [draw,menuitem, right of=File,  xshift=7.5cm] (Run) {Run};
+		    \draw [thick] (File) -- (Run);
+
+  		    \node [draw,menuitem, below=of Run.west, right of=Run, anchor=west] (IKM) {$ ik $-means};
+			\node [draw,menuitem, below=of IKM.west,anchor=west] (AWRD) {A-Ward};
+			\node [draw,menuitem, below=of AWRD.west,anchor=west] (AWRDPB) {A-Ward$ _{p\beta} $};
+			\node [draw,menuitem, below=of AWRDPB.west,anchor=west] (PDDP) {dePDDP };
+			\node [draw,menuitem, below=of PDDP.west,anchor=west] (BIKMR) {Bi KMeans-R };
+			
+   	  		\draw [arrow] (Run) |- (IKM);
+   	  		\draw [arrow] (Run) |- (AWRD);
+			\draw [arrow] (Run) |- (AWRDPB);
+   	  		\draw [arrow] (Run) |- (PDDP);
+   	  		\draw [arrow] (Run) |- (BIKMR);
+   	  		
+		    \node [draw,menuitem, right of=Run,  xshift=3.5cm] (Plot) {Plot};
+  		    \draw [thick] (Run) -- (Plot);			   	  		
+		    \node [draw,menuitem, below=of Plot.west, right of=Plot, anchor=west] (BM) {By markers};
+			\node [draw,menuitem, below=of BM.west,anchor=west] (SVD) {SVD};		    
+			\node [draw,menuitem, below=of SVD.west,anchor=west] (RM) {Remove markers};
+			
+			\draw [arrow] (Plot) |- (BM);
+			\draw [arrow] (Plot) |- (SVD);
+			\draw [arrow] (Plot) |- (RM);
+			
+		    \node [draw,menuitem, right of=Plot,  xshift=3.5cm] (Report) {Report};
+			\draw [thick] (Plot) -- (Report);
+		    \node [draw,menuitem, below=of Report.west, right of=Report, anchor=west] (RT) {Report table};
+		    \node [draw,menuitem, below=of RT.west, anchor=west] (CT) {Center table};
+			\draw [arrow] (Report) |- (RT);
+			\draw [arrow] (Report) |- (CT);		    			
+				
+		\end{tikzpicture}
+\end{document}
