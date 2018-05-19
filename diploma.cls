@@ -28,6 +28,7 @@
 \RequirePackage{pdfpages} % to insert pdf as titile page 
 %\RequirePackage{subcaption} % to tune subcaptions
 \RequirePackage{subfigure}
+\RequirePackage{subfigmat}
 \RequirePackage{caption} % to tune subcaptions
 \RequirePackage{fancyhdr} % fancy headers on every page
 \RequirePackage{xspace} % space after command
@@ -55,6 +56,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%   LISTINGS   %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\renewcommand{\lstlistingname}{Code}
 % define listings colors
 \definecolor{codegreen}{rgb}{0, 0.6, 0}
 \definecolor{codegray}{rgb}{0.5, 0.5, 0.5}
@@ -63,7 +65,7 @@
 
 %% define lising style
 \lstdefinestyle{mystyle}{
-	backgroundcolor=\color{backcolour},   
+	backgroundcolor=\color{backcolor},   
 	commentstyle=\color{codegreen},
 	keywordstyle=\color{magenta},
 	numberstyle=\color{codegray},
@@ -71,7 +73,7 @@
 	basicstyle=\linespread{1}\footnotesize\ttfamily,
 	breakatwhitespace=false,         
 	breaklines=true,                 
-	captionpos=b,                    
+	captionpos=t,                    
 	keepspaces=true,                 
 	numbers=left,                    
 	numbersep=5pt,                  
@@ -242,6 +244,7 @@
 
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
 
 \newcommand{\kmeans}{\mbox{$ k $-means}\xspace}
 \newcommand{\Ward}{Ward\xspace}
@@ -290,4 +293,21 @@
 	\begin{scope}[shift = {(#2,#3)}, scale=0.08]
 		\draw[#1] (0,0) circle (1.5);
 	\end{scope}
+}
+
+\newcommand\pack[5][]{%
+	\path[#1] (#4,#5) -- (#4-#2 , #5)
+	-- (#4-#2 ,#5+#3) -- (#4-#2 ,#5+#3 + 0.7)
+	-- (#4-#2 + 0.45 * #2 ,#5+#3 + 0.7) -- (#4-#2 + 0.45* #2+0.5 ,#5+ #3)
+	-- (#4, #5+#3)
+	--cycle;
+	\path[#1] (#4-#2 , #5+ #3) -- (#4-#2 + 0.6* #2+0.5 ,#5+ #3);
+}
+
+\def\package[#1](#2:#3:#4:#5:#6){%
+	% Synopsis
+	% \regnoter[draw options](text)(w:h)
+	\pack[draw=black, rounded corners=8pt, thick, fill=white]{#3}{#4}{#5}{#6};
+	\pack[draw=black, rounded corners=8pt, thick, fill opacity=0.2, #1]{#3}{#4}{#5}{#6};
+	\node [anchor=west] at (#5-#3,  #6+#4+0.35) {\texttt{#2}};
 }
