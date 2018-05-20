@@ -38,10 +38,15 @@
 \RequirePackage[most]{tcolorbox}
 \RequirePackage{standalone}
 \RequirePackage{tkz-euclide}
+\RequirePackage[edges]{forest}
+\RequirePackage{pgf-umlcd}
+\RequirePackage{wasysym}
+
 \usetikzlibrary{shapes,backgrounds}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{snakes}
 \usetikzlibrary{shapes.geometric, arrows}
+
 %\RequirePackage[showframe]{geometry}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -276,6 +281,20 @@
 
 \tikzstyle{arrow} = [thick,->,>=stealth]
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% NEW %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30, font=\ttfamily]
+
+\tikzstyle{io} = [text width=2cm,align=center,trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm,minimum width=3cm, draw=black, fill=blue!30, font=\ttfamily]
+
+\tikzstyle{process} = [text width=5cm,align=left,rectangle, minimum width=3cm, minimum height=1cm, draw=black, fill=orange!30, font=\ttfamily]
+
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30, font=\ttfamily]
+
+\tikzstyle{point} = [circle, minimum width=1cm, minimum height=1cm, text centered, draw=black, fill=red!80, text=white, font=\ttfamily]
+
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
 \newcommand\Star[3][]{%
 	\path[#1] (0  :#3) -- ( 36:#2) 
 	-- (72 :#3) -- (108:#2)
@@ -295,19 +314,92 @@
 	\end{scope}
 }
 
-\newcommand\pack[5][]{%
+
+\tikzset{weird fill/.style={append after command={
+			\pgfextra
+			\draw[sharp corners, fill=#1,fill opacity=0.3, draw=none]% 
+			(\tikzlastnode)% 
+			[rounded corners=8pt] -| (\tikzlastnode.west)
+			[rounded corners=8pt] |- (\tikzlastnode.north)% 
+			[rounded corners=8pt] -| (\tikzlastnode.east)% 
+			[rounded corners=8pt] |- (\tikzlastnode.south);
+			\endpgfextra}}}
+
+\newcommand\pack[6][]{%
 	\path[#1] (#4,#5) -- (#4-#2 , #5)
 	-- (#4-#2 ,#5+#3) -- (#4-#2 ,#5+#3 + 0.7)
-	-- (#4-#2 + 0.45 * #2 ,#5+#3 + 0.7) -- (#4-#2 + 0.45* #2+0.5 ,#5+ #3)
+	-- (#4-#2 + #6 * #2 ,#5+#3 + 0.7) -- (#4-#2 + #6 * #2+0.0 ,#5+ #3)
 	-- (#4, #5+#3)
 	--cycle;
-	\path[#1] (#4-#2 , #5+ #3) -- (#4-#2 + 0.6* #2+0.5 ,#5+ #3);
+	\path[#1] (#4-#2 , #5+ #3) -- (#4-#2 + 0.8* #2+0.5 ,#5+ #3);
 }
 
 \def\package[#1](#2:#3:#4:#5:#6){%
-	% Synopsis
-	% \regnoter[draw options](text)(w:h)
-	\pack[draw=black, rounded corners=8pt, thick, fill=white]{#3}{#4}{#5}{#6};
-	\pack[draw=black, rounded corners=8pt, thick, fill opacity=0.2, #1]{#3}{#4}{#5}{#6};
-	\node [anchor=west] at (#5-#3,  #6+#4+0.35) {\texttt{#2}};
+	% Synopsis                 2  3 4 5 6
+	% \package[draw options](text:w:h:x:y)
+	%	\pack[draw=black, rounded corners=8pt, thick, fill=white]{#3}{#4}{#5}{#6};
+	%	\pack[draw=black, rounded corners=8pt, thick, fill opacity=0.2, #1]{#3}{#4}{#5}{#6};
+	%	\node [anchor=west, draw=black, thick] at (#5-#3,  #6+#4+0.35) {\texttt{#2}};	
+	
+	%	\node [anchor=west] at (#5-#3,  #6+#4+0.35) {\texttt{#2}};
+	\draw node[minimum height=5mm,anchor=south west,minimum width=15mm,
+	append after command={[rounded corners=8pt](b.west)|-(b.north)},
+	append after command={[rounded corners=8pt](b.north)-|(b.east)},
+	append after command={[rounded corners=0pt](b.east)|-(b.south)},
+	append after command={[rounded corners=0pt](b.south)-|(b.west)}, weird fill=#1]
+	(b) at (#5,  #6+#4) {\texttt{#2}};
+	
+	\draw node[minimum height=5mm,anchor=south west,minimum width=15mm,
+	append after command={[rounded corners=8pt](b.west)|-(b.north)},
+	append after command={[rounded corners=8pt](b.north)-|(b.east)},
+	append after command={[rounded corners=0pt](b.east)|-(b.south)},
+	append after command={[rounded corners=0pt](b.south)-|(b.west)}]
+	(c) at (#5,  #6+#4) {\texttt{#2}};
+	
+	
+	\path[draw,black,fill=#1,fill opacity=0.3,rounded corners=8pt] (#5, #6 + #4) -- (#5,#6) -- (#5+#3, #6) -- (#5+#3, #6 + #4) -- (#5, #6 + #4);
+}
+
+\definecolor{folderbg}{RGB}{124,166,198}
+\definecolor{folderborder}{RGB}{110,144,169}
+
+\def\Size{4pt}
+
+\tikzset{%
+	folder/.pic={%
+		\filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);
+		\filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+	},
+	file/.pic={%
+		\filldraw [draw=folderborder, top color=folderbg!5, bottom color=folderbg!10];
+		\node[inner sep=0pt] (whitehead) at (0,0)
+		{\includegraphics[scale=.12]{img/python_file}};
+	},
+}
+
+\forestset{%
+	declare autowrapped toks={pic me}{},
+	pic dir tree/.style={%
+		for tree={%
+			folder,
+			font=\ttfamily,
+			grow'=0,
+		},
+		before typesetting nodes={%
+			for tree={%
+				edge label+/.option={pic me},
+			},
+		},
+	},
+	pic me set/.code n args=2{%
+		\forestset{%
+			#1/.style={%
+				inner xsep=1\Size,
+				inner ysep=0.75\Size,
+				pic me={pic {#2}},
+			}
+		}
+	},
+	pic me set={directory}{folder},
+	pic me set={file}{file},
 }

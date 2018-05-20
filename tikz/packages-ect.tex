@@ -10,7 +10,7 @@
 
 \tikzset{weird fill/.style={append after command={
 			\pgfextra
-			\draw[sharp corners, fill=#1,fill opacity=0.3, draw=none]% 
+			\draw[sharp corners, fill=#1,fill opacity=1, draw=none]% 
 			(\tikzlastnode)% 
 			[rounded corners=8pt] -| (\tikzlastnode.west)
 			[rounded corners=8pt] |- (\tikzlastnode.north)% 
@@ -50,7 +50,7 @@
 	(c) at (#5,  #6+#4) {\texttt{#2}};
 	
 	
-	\path[draw,black,fill=#1,fill opacity=0.3,rounded corners=8pt] (#5, #6 + #4) -- (#5,#6) -- (#5+#3, #6) -- (#5+#3, #6 + #4) -- (#5, #6 + #4);
+	\path[draw,black,fill=#1,fill opacity=1,rounded corners=8pt] (#5, #6 + #4) -- (#5,#6) -- (#5+#3, #6) -- (#5+#3, #6 + #4) -- (#5, #6 + #4);
 }
 
 
