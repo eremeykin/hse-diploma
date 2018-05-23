@@ -1,0 +1,209 @@
+\documentclass[12pt,tikz]{standalone}
+
+\usepackage[utf8]{inputenc} % use UTF-8
+\usepackage{mmap}
+\usepackage[T2A,OT1]{fontenc} % rus fonts
+\usepackage[russian]{babel} % russian language
+
+\usepackage{color}
+\usepackage{tkz-euclide}
+
+\usetikzlibrary{shapes,backgrounds}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{snakes}
+\usetikzlibrary{shapes.geometric, arrows}
+
+ 
+\begin{document}
+		\begin{tikzpicture}[node distance=2cm]
+		
+		\begin{scope}[yshift=8cm]
+		\fill[orange!60] (7,0) rectangle ++(-4,1); %141.830
+		\node[black] at (5,0.5) {\Huge\textbf{\texttt{ram}}};
+		\end{scope}
+		
+		
+		\begin{scope}[yshift=8cm, xshift=12cm]
+		\fill[red!60] (7,0) rectangle ++(-4,1); %141.830
+		\node[black] at (5,0.5) {\Huge\textbf{\texttt{cpu}}};		
+		\end{scope}
+		
+%		\begin{scope}[yshift=8cm]
+%		\fill[orange!60] (4,0) rectangle ++(-4,1); %141.830
+%		\fill[red!60] (6,0) rectangle ++(4,1); %141.830
+%		\node[black] at (2,0.5) {\Huge\textbf{\texttt{ram}}};
+%		\node[black] at (8,0.5) {\Huge\textbf{\texttt{cpu}}};
+%		\end{scope}
+%		
+%		
+%		\begin{scope}[yshift=8cm, xshift=12cm]
+%		
+%		\fill[green!60] (4,0) rectangle ++(-4,1); %141.830
+%		\fill[blue!60] (6,0) rectangle ++(4,1); %141.830
+%		\node[black] at (2,0.5) {\Huge\textbf{\texttt{diag}}};
+%		\node[black] at (8,0.5) {\Huge\textbf{\texttt{price}}};
+%		\end{scope}
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\begin{scope}
+		\tkzInit[xmax=100,ymax=7,xmin=0,ymin=0, xstep=10]
+		\begin{scope}[dash pattern=on 1pt off 4pt]
+		\tkzGrid
+		\end{scope}	
+		\tkzDrawX[label={}]
+		\tkzLabelX[orig=true,label options={font=\large}]	
+		\fill[blue!60] (0,0) rectangle                       ++(3.429 * 0.1,1);
+		\fill[green!60, yshift=2cm] (0,0) rectangle          ++(0.165 * 0.1,1);
+		\fill[red!60, yshift=4cm] (0,0) rectangle            ++(0.313 * 0.1,1);
+		\fill[orange!60, yshift=6cm] (0,0) rectangle         ++(0.936 * 0.1,1);
+		\node [draw=none,anchor=west, xshift=0cm, rotate=90,anchor=north,outer sep=-4pt, font=\Huge, ] at (-1,3) {Cluster 1 (26)};
+		\draw (0,0) --(0,7);
+		\end{scope}
+		
+
+  		\begin{scope}[yshift=-0cm, xshift=12cm]
+		\tkzInit[xmax=100,ymax=7,xmin=0,ymin=0, xstep=10]
+		\begin{scope}[dash pattern=on 1pt off 4pt]
+		\tkzGrid
+		\end{scope}	
+		\tkzDrawX[label={}]
+		\tkzLabelX[orig=true,label options={font=\large}]
+		\fill[blue!60] (0,0) rectangle                       ++(1.937 * 0.1,1);
+		\fill[green!60, yshift=2cm] (0,0) rectangle          ++(0.949 * 0.1,1);
+		\fill[red!60, yshift=4cm] (0,0) rectangle            ++(0.438 * 0.1,1);
+		\fill[orange!60, yshift=6cm] (0,0) rectangle         ++(0.055 * 0.1,1);
+		\node [draw=none,anchor=west, xshift=0cm, rotate=90,anchor=north,outer sep=-4pt, font=\Huge, ] at (-1,3) {Cluster 2 (9)};
+		\draw (0,0) --(0,7);
+		\end{scope}	
+			
+		
+				
+		\begin{scope}[yshift=-8cm]
+		\tkzInit[xmax=100,ymax=7,xmin=0,ymin=0, xstep=10]
+		\begin{scope}[dash pattern=on 1pt off 4pt]
+		\tkzGrid
+		\end{scope}	
+		\tkzDrawX[label={}]
+		\tkzLabelX[orig=true,label options={font=\large}]	
+		\fill[blue!60] (0,0) rectangle                       ++(  0.485 * 0.1,1);
+		\fill[green!60, yshift=2cm] (0,0) rectangle          ++(  2.076 * 0.1,1);
+		\fill[red!60, yshift=4cm] (0,0) rectangle            ++(  1.785 * 0.1,1);
+		\fill[orange!60, yshift=6cm] (0,0) rectangle         ++(  1.817 * 0.1,1);
+		\node [draw=none,anchor=west, xshift=0cm, rotate=90,anchor=north,outer sep=-4pt, font=\Huge, ] at (-1,3) {Cluster 5 (26)};
+		\draw (0,0) --(0,7);
+		\end{scope}
+  
+		\begin{scope}[yshift=-8cm, xshift=12cm]
+		\tkzInit[xmax=100,ymax=7,xmin=0,ymin=0, xstep=10]
+		\begin{scope}[dash pattern=on 1pt off 4pt]
+		\tkzGrid
+		\end{scope}	
+		\tkzDrawX[label={}]
+		\tkzLabelX[orig=true,label options={font=\large}]
+		\fill[blue!60] (0,0) rectangle                       ++(0.338 * 0.1,1);
+		\fill[green!60, yshift=2cm] (0,0) rectangle          ++(1.256 * 0.1,1);
+		\fill[red!60, yshift=4cm] (0,0) rectangle            ++(0.015 * 0.1,1);
+		\fill[orange!60, yshift=6cm] (0,0) rectangle         ++(0.756 * 0.1,1);
+		\node [draw=none,anchor=west, xshift=0cm, rotate=90,anchor=north,outer sep=-4pt, font=\Huge, ] at (-1,3) {Cluster 6 (37)};	
+		\draw (0,0) --(0,7);
+		\end{scope}	
+			
+		
+		\begin{scope}[xshift=24cm]
+		
+				\begin{scope}[yshift=8cm]
+				\fill[green!60] (7,0) rectangle ++(-4,1); %141.830
+				\node[black] at (5,0.5) {\Huge\textbf{\texttt{diag}}};
+				\end{scope}
+				
+				
+				\begin{scope}[yshift=8cm, xshift=12cm]
+				\fill[blue!60] (7,0) rectangle ++(-4,1); %141.830
+				\node[black] at (5,0.5) {\Huge\textbf{\texttt{price}}};		
+				\end{scope}
+				
+				\begin{scope}
+				\tkzInit[xmax=100,ymax=7,xmin=0,ymin=0, xstep=10]
+				\begin{scope}[dash pattern=on 1pt off 4pt]
+				\tkzGrid
+				\end{scope}	
+				\tkzDrawX[label={}]
+				\tkzLabelX[orig=true,label options={font=\large}]	
+				\fill[blue!60] (0,0) rectangle                       ++(7.598 * 0.1,1);
+				\fill[green!60, yshift=2cm] (0,0) rectangle          ++(1.147 * 0.1,1);
+				\fill[red!60, yshift=4cm] (0,0) rectangle            ++(10.87 * 0.1,1);
+				\fill[orange!60, yshift=6cm] (0,0) rectangle         ++(9.539 * 0.1,1);
+				\node [draw=none,anchor=west, xshift=0cm, rotate=90,anchor=north,outer sep=-4pt, font=\Huge, ] at (-1,3) {Cluster 3 (56)};
+				\draw (0,0) --(0,7);
+				\end{scope}
+				
+				
+				\begin{scope}[yshift=-0cm, xshift=12cm]
+				\tkzInit[xmax=100,ymax=7,xmin=0,ymin=0, xstep=10]
+				\begin{scope}[dash pattern=on 1pt off 4pt]
+				\tkzGrid
+				\end{scope}	
+				\tkzDrawX[label={}]
+				\tkzLabelX[orig=true,label options={font=\large}]
+				\fill[blue!60] (0,0) rectangle                       ++(34.152 * 0.1,1);
+				\fill[green!60, yshift=2cm] (0,0) rectangle          ++(14.140 * 0.1,1);
+				\fill[red!60, yshift=4cm] (0,0) rectangle            ++(4.438 * 0.1,1);
+				\fill[orange!60, yshift=6cm] (0,0) rectangle         ++(34.480 * 0.1,1);
+				\node [draw=none,anchor=west, xshift=0cm, rotate=90,anchor=north,outer sep=-4pt, font=\Huge, ] at (-1,3) {Cluster 4 (42)};
+				\draw (0,0) --(0,7);
+				\end{scope}		
+				
+				
+				\begin{scope}[yshift=-8cm]
+				\tkzInit[xmax=100,ymax=7,xmin=0,ymin=0, xstep=10]
+				\begin{scope}[dash pattern=on 1pt off 4pt]
+				\tkzGrid
+				\end{scope}	
+				\tkzDrawX[label={}]
+				\tkzLabelX[orig=true,label options={font=\large}]	
+				\fill[blue!60] (0,0) rectangle                       ++(2.451* 0.1,1);
+				\fill[green!60, yshift=2cm] (0,0) rectangle          ++(3.832* 0.1,1);
+				\fill[red!60, yshift=4cm] (0,0) rectangle            ++(2.408* 0.1,1);
+				\fill[orange!60, yshift=6cm] (0,0) rectangle         ++(7.890* 0.1,1);
+				\node [draw=none,anchor=west, xshift=0cm, rotate=90,anchor=north,outer sep=-4pt, font=\Huge, ] at (-1,3) {Cluster 7 (60)};
+				\draw (0,0) --(0,7);
+				\end{scope}
+				
+				\begin{scope}[yshift=-8cm, xshift=12cm]
+				\tkzInit[xmax=100,ymax=7,xmin=0,ymin=0, xstep=10]
+				\begin{scope}[dash pattern=on 1pt off 4pt]
+				\tkzGrid
+				\end{scope}	
+				\tkzDrawX[label={}]
+				\tkzLabelX[orig=true,label options={font=\large}]
+				\fill[blue!60] (0,0) rectangle                       ++(28.253 * 0.1,1);
+				\fill[green!60, yshift=2cm] (0,0) rectangle          ++(14.713 * 0.1,1);
+				\fill[red!60, yshift=4cm] (0,0) rectangle            ++(17.276 * 0.1,1);
+				\fill[orange!60, yshift=6cm] (0,0) rectangle         ++(24.613 * 0.1,1);
+				\node [draw=none,anchor=west, xshift=0cm, rotate=90,anchor=north,outer sep=-4pt, font=\Huge, ] at (-1,3) {Cluster 8 (110)};	
+				\draw (0,0) --(0,7);
+				\end{scope}	
+								
+		\end{scope}
+		\begin{scope}[yshift=-8cm, xshift=5cm]
+				\begin{scope}[yshift=-8cm, xshift=12cm]
+				\tkzInit[xmax=100,ymax=7,xmin=0,ymin=0, xstep=10]
+				\begin{scope}[dash pattern=on 1pt off 4pt]
+				\tkzGrid
+				\end{scope}	
+				\tkzDrawX[label={}]
+				\tkzLabelX[orig=true,label options={font=\large}]
+				\fill[blue!60] (0,0) rectangle                       ++(0.837 * 0.1,1);
+				\fill[green!60, yshift=2cm] (0,0) rectangle          ++(37.74 * 0.1,1);
+				\fill[red!60, yshift=4cm] (0,0) rectangle            ++(0.121 * 0.1,1);
+				\fill[orange!60, yshift=6cm] (0,0) rectangle         ++(13.91 * 0.1,1);
+				\node [draw=none,anchor=west, xshift=0cm, rotate=90,anchor=north,outer sep=-4pt, font=\Huge, ] at (-1,3) {Cluster 9 (110)};	
+				\draw (0,0) --(0,7);
+				\end{scope}	
+			\end{scope} 
+
+  
+					
+    	        			
+		\end{tikzpicture}
+\end{document}

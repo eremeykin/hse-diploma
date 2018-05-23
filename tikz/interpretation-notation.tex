@@ -1,0 +1,36 @@
+\documentclass[12pt,tikz]{standalone}
+
+\usepackage[utf8]{inputenc} % use UTF-8
+\usepackage{mmap}
+\usepackage[T2A,OT1]{fontenc} % rus fonts
+\usepackage[russian]{babel} % russian language
+
+\usepackage{color}
+\usepackage{tkz-euclide}
+
+\usetikzlibrary{shapes,backgrounds}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{snakes}
+\usetikzlibrary{shapes.geometric, arrows}
+
+ 
+\begin{document}
+		\begin{tikzpicture}[node distance=2cm]
+
+		\begin{scope}
+		\fill[orange!60] (-4,0) rectangle ++(-4,1); %141.830
+		\fill[red!60] (4,0) rectangle ++(4,1); %141.830
+		\node[black] at (-6,0.5) {\Huge\textbf{\texttt{ram}}};
+		\node[black] at (6,0.5) {\Huge\textbf{\texttt{cpu}}};
+		\end{scope}
+		           
+		           
+		\begin{scope}[yshift=-0cm, xshift=22cm]
+		\fill[green!60] (-4,0) rectangle ++(-4,1); %141.830
+		\fill[blue!60] (4,0) rectangle ++(4,1); %141.830
+		\node[black] at (-6,0.5) {\Huge\textbf{\texttt{diag}}};
+		\node[black] at (6,0.5) {\Huge\textbf{\texttt{price}}};
+		\end{scope}
+       	       	        	        
+		\end{tikzpicture}
+\end{document}
